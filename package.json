@@ -1,0 +1,58 @@
+{
+  "name": "@jbknowledge/react-models",
+  "version": "0.1.0",
+  "description": "Global state management library with hooks",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "jbknowledge",
+    "react",
+    "models",
+    "global",
+    "state",
+    "redux"
+  ],
+  "homepage": "https://github.com/JBKLabs/react-models",
+  "bugs": {
+    "url": "https://github.com/JBKLabs/react-models/issues"
+  },
+  "license": "Apache-2.0",
+  "authors": [
+    "Brian Maule (https://github.com/mauleb)"
+  ],
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JBKLabs/react-models.git"
+  },
+  "peerDependencies": {
+    "react": "16.10.2"
+  },
+  "devDependencies": {
+    "@babel/core": "7.6.4",
+    "@babel/preset-react": "7.6.3",
+    "@jbknowledge/eslint-config": "0.1.0",
+    "rollup": "1.24.0",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-node-resolve": "5.2.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@jbknowledge"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "tabWidth": 2
+  }
+}

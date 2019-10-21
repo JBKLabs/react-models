@@ -1,0 +1,6 @@
+{
+  "eslint.autoFixOnSave": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "git.autofetch": true
+}
