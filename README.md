@@ -5,7 +5,7 @@ Global state management in the world of hooks.
 **Wrap your app**
 
 ```jsx
-import { ModelProvider } from '@jbnowledge/react-models';
+import { ModelProvider } from '@jbknowledge/react-models';
 
 ReactDOM.render(
   <ModelProvider>
@@ -22,20 +22,21 @@ import { buildModel } from '@jbknowledge/react-models';
 
 const model = {
   name: 'users',
-  state: { // initial state
-    {
-      id: '71f74b03-6a37-4b8d-b13a-cb2e3bb39689',
+  state: {
+    // initial state
+    0: {
+      id: 0,
       firstName: 'John',
       lastName: 'Doe'
     },
-    {
-      id: '71f74b03-6a37-4b8d-b13a-cb2e3bb39689',
+    1: {
+      id: 1,
       firstName: 'Jane',
       lastName: 'Doe'
     }
   },
   reducers: {
-    setUser: (state, param) => ({}) // immutable reducers
+    setUser: (state, param) => state // immutable reducers
   },
   effects: (dispatch) => ({
     // run async side effects
@@ -231,7 +232,7 @@ const things = {
 
 **mapStateToList**: Optionally declare a mapping function to convert your state into a list of items. By default, it is assumed that your state is structured like the following:
 
-```json
+```js
 {
   [id]: [entity],
   [id]: [entity],
@@ -241,7 +242,7 @@ const things = {
 
 i.e.
 
-```json
+```js
 {
   0: { "id": 0, "firstName": "john", "lastName": "doe" },
   1: { "id": 1, "firstName": "jane", "lastName": "doe" }
@@ -283,7 +284,7 @@ More specifically, it returns a function `useModel(param)`.
 
 **param**: Optionally pass in to filter/transform/sort/etc your items. `param` itself can be either an `object` or a `function`.
 
-**object param**
+**typeof param === 'object'**
 
 If you call the built model hook with an object parameter, then you will recieve all entities which exactly match each specified key. For example:
 
@@ -292,26 +293,29 @@ const model = {
   ...,
   state: {
     0: { firstName: 'John', lastName: 'Doe' },
-    1: { firstName: 'Jane', lastName: 'Doe' },
-    2: { firstName: 'George', lastName: 'Washington' }
+    1: { firstName: 'George', lastName: 'Washington' },
+    2: { firstName: 'Jane', lastName: 'Doe' },
   }
 }
 
 const useModel = buildModel(model);
 
 const Component = () => {
-  const allJohns = useModel({ lastName: 'Doe' });
+  const filteredUsers = useModel({ lastName: 'Doe' });
   /*
-    useModel" will return all entities which have the key "firstName" which
-    exactly matches "Doe". In this case, it would return an array containing
-    John and Jane "Doe".
+    useModel will return all entities which have the key "firstName" which
+    exactly matches "Doe". In this case, it would return:
+    [
+      { firstName: 'John', lastName: 'Doe' },
+      { firstName: 'Jane', lastName: 'Doe' }
+    ]
   */
 }
 ```
 
-**function param**
+**typeof param === 'function'**
 
-Alternative to the more restrictive object param which filters by exact matches, you can pass in a callback function instead. This function will be called with all entities currently in your global state and expects a return value. In this callback, you can filter via more complex rules, sort, transform/map your entities, or anything else you desire.
+Alternative to the more restrictive object param which filters by exact matches, you can pass in a callback function instead. This function will be called with all entities currently in your global state and will pass the return value as the output of the useModel hook. In this callback, you can filter via more complex rules, sort, transform/map your entities, or anything else you desire.
 
 ```js
 const Component = () => {
@@ -340,7 +344,7 @@ ReactDOM.render(
 
 `withModelEffects` is an HoC which allows you to inject any model's effects into your component as props.
 
-**mapEffects**: A Function which is provided all effects nested by model, i.e. `_.items.applyAsync`, and expects an object to be returned.
+**mapEffects**: A Function which is provided all effects nested by model, i.e. `models.items.applyAsync`, and expects an object to be returned.
 
 ```js
 const mapEffects = (models) => ({
