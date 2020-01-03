@@ -34,7 +34,6 @@ const buildModel = ({
         }
 
         if (typeof param === 'function') {
-          // console.log('nice');
           return param(items);
         }
 
