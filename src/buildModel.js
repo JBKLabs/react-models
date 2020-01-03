@@ -16,32 +16,32 @@ const buildModel = ({
 
   /* eslint-disable react-hooks/rules-of-hooks */
   const modelHook = (...args) => {
-    if (args.length > 2) {
+    if (args.length > 1) {
       throw new Error(
         'Unexpected number of args for model hook.\nRefer to the documentation for model hooks.'
       );
     }
 
+    const param = args.length === 1 ? args[0] : null;
     const transform = useCallback(
       (items) => {
-        if (!args[0]) {
+        if (!param) {
           return items;
         }
 
-        if (typeof args[0] === 'object') {
-          return defaultTransform(args[0])(items);
+        if (typeof param === 'object') {
+          return defaultTransform(param)(items);
         }
 
-        if (typeof args[0] === 'function') {
-          // console.log('nice');
-          return args[0](items);
+        if (typeof param === 'function') {
+          return param(items);
         }
 
         throw new Error(
           'Invalid callback provided. Expected either an object or a callback function.\nRefer to the documentation for model hooks.'
         );
       },
-      [args]
+      [param]
     );
 
     const ctx = useContext(ModelContext);
