@@ -1,6 +1,6 @@
 {
   "name": "@jbknowledge/react-models",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Global state management library with hooks",
   "main": "dist/index.js",
   "scripts": {
