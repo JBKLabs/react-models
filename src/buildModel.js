@@ -1,7 +1,8 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import ModelContext from './ModelContext';
 import defaultTransform from './defaultTransform';
+import { initializeModel } from './store';
 
 const buildModel = ({
   name,
@@ -14,6 +15,8 @@ const buildModel = ({
     throw new Error('Name is a required key for buildModel');
   }
 
+  initializeModel(name, state, reducers, effects);
+
   /* eslint-disable react-hooks/rules-of-hooks */
   const modelHook = (...args) => {
     if (args.length > 1) {
@@ -23,6 +26,10 @@ const buildModel = ({
     }
 
     const param = args.length === 1 ? args[0] : null;
+    const savedParam = typeof param === 'object'
+      ? JSON.stringify(param)
+      : param.toString();
+
     const transform = useCallback(
       (items) => {
         if (!param) {
@@ -41,25 +48,21 @@ const buildModel = ({
           'Invalid callback provided. Expected either an object or a callback function.\nRefer to the documentation for model hooks.'
         );
       },
-      [param]
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [savedParam]
     );
 
     const ctx = useContext(ModelContext);
-
-    useEffect(() => {
-      ctx.newModel(name, state, reducers, effects);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const model = useMemo(() => ctx.models ? ctx.models[name] : null, [ctx]);
+    const models = ctx.models || {};
+    const current = models[name];
     const [result, setResult] = useState([]);
 
     useEffect(() => {
-      if (model) {
-        const allItems = mapStateToList(model);
+      if (current) {
+        const allItems = mapStateToList(current);
         setResult(transform(allItems));
       }
-    }, [model, transform]);
+    }, [current, transform]);
 
     return result;
   };

@@ -24,13 +24,13 @@ const model = {
   name: 'users',
   state: {
     // initial state
-    0: {
-      id: 0,
+    12: {
+      id: 12,
       firstName: 'John',
       lastName: 'Doe'
     },
-    1: {
-      id: 1,
+    34: {
+      id: 34,
       firstName: 'Jane',
       lastName: 'Doe'
     }
@@ -244,8 +244,8 @@ i.e.
 
 ```js
 {
-  0: { "id": 0, "firstName": "john", "lastName": "doe" },
-  1: { "id": 1, "firstName": "jane", "lastName": "doe" }
+  12: { "id": 12, "firstName": "john", "lastName": "doe" },
+  34: { "id": 34, "firstName": "jane", "lastName": "doe" }
 }
 ```
 
