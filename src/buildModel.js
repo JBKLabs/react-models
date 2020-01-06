@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import ModelContext from './ModelContext';
 import defaultTransform from './defaultTransform';
+import { initializeModel } from './store';
 
 const buildModel = ({
   name,
@@ -13,6 +14,8 @@ const buildModel = ({
   if (!name) {
     throw new Error('Name is a required key for buildModel');
   }
+
+  initializeModel(name, state, reducers, effects);
 
   /* eslint-disable react-hooks/rules-of-hooks */
   const modelHook = (...args) => {
@@ -45,21 +48,16 @@ const buildModel = ({
     );
 
     const ctx = useContext(ModelContext);
-
-    useEffect(() => {
-      ctx.newModel(name, state, reducers, effects);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const model = useMemo(() => ctx.models ? ctx.models[name] : null, [ctx]);
+    const models = ctx.models || {};
+    const state = models[name];
     const [result, setResult] = useState([]);
 
     useEffect(() => {
-      if (model) {
-        const allItems = mapStateToList(model);
+      if (state) {
+        const allItems = mapStateToList(state);
         setResult(transform(allItems));
       }
-    }, [model, transform]);
+    }, [state, transform]);
 
     return result;
   };
