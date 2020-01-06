@@ -49,15 +49,15 @@ const buildModel = ({
 
     const ctx = useContext(ModelContext);
     const models = ctx.models || {};
-    const state = models[name];
+    const current = models[name];
     const [result, setResult] = useState([]);
 
     useEffect(() => {
-      if (state) {
-        const allItems = mapStateToList(state);
+      if (current) {
+        const allItems = mapStateToList(current);
         setResult(transform(allItems));
       }
-    }, [state, transform]);
+    }, [current, transform]);
 
     return result;
   };
