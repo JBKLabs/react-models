@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Update generated model hooks to provide referential equality for anonymous objects/functions out of the box
+
 ### Fixed
 - Issue where models are not instantiated until first render of associated model hooks resulting from `buildModel` ([#4](https://github.com/JBKLabs/react-models/issues/4))
 

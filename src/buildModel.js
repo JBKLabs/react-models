@@ -26,8 +26,9 @@ const buildModel = ({
     }
 
     const param = args.length === 1 ? args[0] : null;
-    const savedParam =
-      typeof param === 'object' ? JSON.stringify(param) : param.toString();
+    const savedParam = typeof param === 'object'
+      ? JSON.stringify(param)
+      : param.toString();
 
     const transform = useCallback(
       (items) => {
