@@ -12,7 +12,6 @@ export const store = {
   subscribe,
   unsubscribe
 };
-window.store = store; // DEBUG
 
 export const notify = () => {
   if (listener) {
