@@ -284,6 +284,8 @@ More specifically, it returns a function `useModel(param)`.
 
 **param**: Optionally pass in to filter/transform/sort/etc your items. `param` itself can be either an `object` or a `function`.
 
+**NOTE**: React models does not support anonymous objects or functions as params for the generated `useModel(param)` hooks. Guaranteeing referential equality between renders can be achieved with React's `useCallback` and `useMemo` hooks and are the responsibility of the user.
+
 **typeof param === 'object'**
 
 If you call the built model hook with an object parameter, then you will recieve all entities which exactly match each specified key. For example:

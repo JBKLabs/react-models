@@ -26,10 +26,6 @@ const buildModel = ({
     }
 
     const param = args.length === 1 ? args[0] : null;
-    const savedParam = typeof param === 'object'
-      ? JSON.stringify(param)
-      : param.toString();
-
     const transform = useCallback(
       (items) => {
         if (!param) {
@@ -49,7 +45,7 @@ const buildModel = ({
         );
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [savedParam]
+      [param]
     );
 
     const ctx = useContext(ModelContext);
